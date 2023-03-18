@@ -14,6 +14,7 @@
 		0AC6332929C5540A003ED9C0 /* PaperclipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6332829C5540A003ED9C0 /* PaperclipTests.swift */; };
 		0AC6333329C5540A003ED9C0 /* PaperclipUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6333229C5540A003ED9C0 /* PaperclipUITests.swift */; };
 		0AC6333529C5540A003ED9C0 /* PaperclipUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6333429C5540A003ED9C0 /* PaperclipUITestsLaunchTests.swift */; };
+		0AC6334429C56906003ED9C0 /* StickyStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6334329C56906003ED9C0 /* StickyStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		0AC6332E29C5540A003ED9C0 /* PaperclipUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaperclipUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AC6333229C5540A003ED9C0 /* PaperclipUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperclipUITests.swift; sourceTree = "<group>"; };
 		0AC6333429C5540A003ED9C0 /* PaperclipUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperclipUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0AC6334329C56906003ED9C0 /* StickyStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				0AC6331629C55409003ED9C0 /* PaperclipApp.swift */,
+				0AC6334329C56906003ED9C0 /* StickyStack.swift */,
 				0AC6331829C55409003ED9C0 /* ContentView.swift */,
 				0AC6331A29C5540A003ED9C0 /* Assets.xcassets */,
 				0AC6331C29C5540A003ED9C0 /* Paperclip.entitlements */,
@@ -261,6 +264,7 @@
 			files = (
 				0AC6331929C55409003ED9C0 /* ContentView.swift in Sources */,
 				0AC6331729C55409003ED9C0 /* PaperclipApp.swift in Sources */,
+				0AC6334429C56906003ED9C0 /* StickyStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
