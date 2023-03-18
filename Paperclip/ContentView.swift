@@ -9,160 +9,109 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var stickies: [StickyNote] = loadStickyNotes()
-    @FocusState var showKeyboard: Bool
+    @State var notes: [Note] = [Note(importance: .important, title: "My first note is going to be awesome", words: "baihgaokgha"), Note(importance: .important, title: "Test 2", words: "baihgaokgha"), Note(importance: .insignficant, title: "Test 3", words: "baihgaokgha"), Note(importance: .important, title: "Test 4", words: "baihgaokgha"), Note(importance: .somewhat, title: "Test 5", words: "baihgaokgha"), Note(importance: .somewhat, title: "Test 6", words: "baihgaokgha")]
     
-    @State var moving = false
-    
-    func clearStickyZ() {
-        for i in stickies.indices {
-            stickies[i].zInd = 0
-        }
-    }
-    
-    func overTrash(_ pos: CGPoint) -> Bool {
-        let trash = (x: screen().width * 0.87, y: screen().height * 0.89)
-        if abs(pos.x - trash.x) < (screen().width * 0.12) && abs(pos.y - trash.y) < (screen().width * 0.16) {
-            return true
-        }
-        return false
-    }
+    @State var searchText = ""
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("alice")
+                Color.primary.colorInvert()
                     .edgesIgnoringSafeArea(.all)
-                    .onTapGesture {
-                        showKeyboard = false
-                    }
-                StickyStack()
-                    .position(x: screen().width * 0.17, y: screen().height * 0.07)
-                    .onTapGesture {
-                        stickies.append(StickyNote(words: "", position: CGPoint(x: screen().width * 0.5 + 140, y: screen().height * 0.3 + 148)))
-                    }
-                Text("🗑️")
-                    .font(.system(size: 60))
-                    .position(x: screen().width * 0.87, y: screen().height * 0.89)
-                    .disabled(!moving)
-                    .opacity(moving ? 1 : 0)
-                ForEach($stickies, content: { $sticky in
-                    TextEditor(text: $sticky.words)
-                        .font(.system(.body, design: .rounded, weight: .light))
-                        .scaleEffect(sticky.almostTrash ? 0.5 : 1)
-                        .foregroundColor(.black)
-                        .padding(.top, 25)
-                        .padding(5)
-                        .frame(width: 260, height: 270)
-                        .scrollContentBackground(.hidden)
-                        .background(
-                            Color(sticky.almostTrash ? "stickyTrash" : "stickyYellow").shadow(color: .black.opacity(0.1), radius: 6, x: 5, y: 5)
-                                .overlay(alignment: .top, content: {
-                                    LinearGradient(colors: [Color("stickyYellowTop"), Color("stickyYellowTop"), Color("stickyYellow")], startPoint: .top, endPoint: .bottom)
-                                        .frame(height: 20)
-//                                    Color("stickyYellowTop")
-//                                        .frame(height: 20)
-                                })
-                                .scaleEffect(sticky.almostTrash ? 0.5 : 1)
-                        )
-                        .rotationEffect(Angle(degrees: sticky.almostTrash ? 8 : 0), anchor: .center)
-                        .position(sticky.position)
-                        .gesture(
-                            DragGesture()
-                                .onChanged({ gesture in
-                                    DispatchQueue.main.async {
-                                        clearStickyZ()
-                                        sticky.zInd = 4
-                                        withAnimation(.spring().speed(1.5)) {
-                                            moving = true
-                                            sticky.moving = true
-                                            sticky.position.x = gesture.location.x
-                                            sticky.position.y = gesture.location.y
-                                        }
-                                        if overTrash(gesture.location) {
-                                            sticky.almostTrash = true
-                                        }
-                                        if !overTrash(gesture.location) {
-                                            sticky.almostTrash = false
-                                        }
-                                    }
-                                })
-                                .onEnded({_ in
-                                    withAnimation(.spring()) {
-                                        sticky.moving = false
-                                        moving = false
-                                        if sticky.almostTrash {
-                                            DispatchQueue.main.async {
-                                                stickies.removeMatchingID(id: sticky.id)
-                                            }
-                                        }
-                                    }
-                                })
-                        )
-                        .scaleEffect(sticky.moving ? 0.9 : 0.85, anchor: .center)
-                        .focused($showKeyboard)
-                        .zIndex(sticky.zInd)
-                        .animation(.spring(), value: showKeyboard)
-                        .animation(.spring(), value: sticky.almostTrash)
-                })
-            }
-        } .onChange(of: stickies, perform: { _ in
-            saveStickyNotes(stickies)
-        })
+                ScrollView {
+                    VStack {
+                        ImportantList(notes: $notes, search: $searchText)
+                        SomewhatList(notes: $notes, search: $searchText)
+                        InsignificantList(notes: $notes, search: $searchText)
+                    } .padding(.top)
+                }
+            } .navigationTitle("Paperclip 📎")
+                .searchable(text: $searchText)
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .preferredColorScheme(.light)
+        ContentView()
+            .preferredColorScheme(.dark)
     }
 }
 
-struct StickyNote: Identifiable, Equatable, Codable {
+struct Note: Codable, Hashable, Identifiable {
+    var importance: Importance
+    var title: String
     var words: String
-    var position: CGPoint
-    var moving: Bool = false
-    var almostTrash = false
-    var zInd: Double = 0
-    let id = UUID()
+    var icon: String = "note.text"
+    var lastEditDate: Date = Date()
+    var firstCreatedDate: Date = Date()
+    var passwordProtected: Bool = false
+    var password: String = ""
+    var id = UUID()
 }
 
-struct screen {
-    let width = UIScreen.main.bounds.width
-    let height = UIScreen.main.bounds.height
+enum Importance: Codable {
+    case insignficant
+    case somewhat
+    case important
 }
 
-func saveStickyNotes(_ stickyNotes: [StickyNote]) {
-    
-    var savableStickies: [StickyNote] = []
-    for i in stickyNotes {
-        if i.words != "" {
-            savableStickies.append(i)
-        }
-    }
+func saveNotes(_ notes: [Note]) {
     let encoder = JSONEncoder()
-    if let encoded = try? encoder.encode(savableStickies) {
-        UserDefaults.standard.set(encoded, forKey: "stickies")
+    if let encoded = try? encoder.encode(notes) {
+        UserDefaults.standard.set(encoded, forKey: "notes")
     }
 }
 
 // Retrieve the array of StickyNotes from UserDefaults
-func loadStickyNotes() -> [StickyNote] {
+func loadNotes() -> [Note] {
     let decoder = JSONDecoder()
-    if let data = UserDefaults.standard.object(forKey: "stickies") as? Data,
-       let stickyNotes = try? decoder.decode([StickyNote].self, from: data) {
-        return stickyNotes
+    if let data = UserDefaults.standard.object(forKey: "notes") as? Data,
+       let notes = try? decoder.decode([Note].self, from: data) {
+        return notes
     }
-    return [StickyNote(words: "This is your first sticky!", position: CGPoint(x: 200, y: 300))]
+    return [Note(importance: .important, title: "This is your first note!", words: "You can add more notes by clicking the plus in the top right!")]
 }
 
-extension [StickyNote] {
-    mutating func removeMatchingID(id: UUID) {
-        for i in self.indices {
-            if self[i].id == id {
-                self.remove(at: i)
-                break
-            }
+extension [Note] {
+    func important() -> [Note] {
+        var output: [Note] = []
+        for note in self {
+            if note.importance == .important { output.append(note) }
         }
+        return output
+    }
+    func somewhat() -> [Note] {
+        var output: [Note] = []
+        for note in self {
+            if note.importance == .somewhat { output.append(note) }
+        }
+        return output
+    }
+    func insignificant() -> [Note] {
+        var output: [Note] = []
+        for note in self {
+            if note.importance == .insignficant { output.append(note) }
+        }
+        return output
+    }
+    func getContaining(_ search: String) -> [Note] {
+        if search == "" || search == " " { return self }
+        var output: [Note] = []
+        for note in self {
+            if note.title.contains(search) { output.append(note) } else if note.words.contains(search) { output.append(note) }
+        }
+        return output
+    }
+}
+
+extension Note {
+    func noteContains(_ search: String) -> Bool {
+        if search == "" || search == " " { return true }
+        if self.title.contains(search) { return true }
+        if self.words.contains(search) { return true }
+        return false
     }
 }
