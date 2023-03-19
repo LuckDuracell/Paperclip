@@ -20,7 +20,7 @@ struct SomewhatList: View {
                     .padding(.leading)
                 Spacer()
             }
-            ForEach(notes.somewhat()) { note in
+            ForEach($notes) { $note in
                 if note.noteContains(search) && (note.importance == .somewhat) {
                     NavigationLink(destination: {
                         NoteEditor(note: note)

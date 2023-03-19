@@ -20,7 +20,7 @@ struct InsignificantList: View {
                     .padding(.leading)
                 Spacer()
             }
-            ForEach(notes.insignificant()) { note in
+            ForEach($notes) { $note in
                 if note.noteContains(search) && (note.importance == .insignficant) {
                     NavigationLink(destination: {
                         NoteEditor(note: note)
