@@ -11,7 +11,7 @@ struct NoteEditor: View {
     
     @State var note: Note
     
-    @FocusState var showTitleKeyboard: Bool
+    @FocusState var showKeyboard: Bool
     
     var body: some View {
         VStack {
@@ -19,13 +19,14 @@ struct NoteEditor: View {
                 .foregroundColor(.primary)
                 .font(.largeTitle.bold())
                 .padding(.horizontal)
-                .focused($showTitleKeyboard)
+                .focused($showKeyboard)
             ScrollView {
                 TextEditor(text: $note.words)
                     .padding()
                     .frame(minWidth: screen().width, minHeight: screen().height * 0.6 , maxHeight: .infinity)
                     .scrollContentBackground(.visible)
-                    .scrollDisabled(true)
+                    .scrollDismissesKeyboard(.interactively)
+                    .focused($showKeyboard)
             }
         } .navigationBarTitleDisplayMode(.inline)
             .onChange(of: note, perform: { _ in
