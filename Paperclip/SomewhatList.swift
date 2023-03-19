@@ -21,9 +21,12 @@ struct SomewhatList: View {
                 Spacer()
             }
             ForEach(notes.somewhat()) { note in
-                if note.noteContains(search) {
+                if note.noteContains(search) && (note.importance == .somewhat) {
                     NavigationLink(destination: {
-                        
+                        NoteEditor(note: note)
+                            .onDisappear(perform: {
+                                notes = loadNotes()
+                            })
                     }, label: {
                         HStack {
                             Image(systemName: note.icon)

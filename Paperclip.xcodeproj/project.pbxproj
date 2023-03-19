@@ -20,6 +20,7 @@
 		0AC6334A29C59EAF003ED9C0 /* SomewhatList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6334929C59EAF003ED9C0 /* SomewhatList.swift */; };
 		0AC6334C29C59ED0003ED9C0 /* InsignificantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6334B29C59ED0003ED9C0 /* InsignificantList.swift */; };
 		0AC6334E29C5AA56003ED9C0 /* NoteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6334D29C5AA56003ED9C0 /* NoteEditor.swift */; };
+		0AC6335029C68AD5003ED9C0 /* NoteModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6334F29C68AD5003ED9C0 /* NoteModal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		0AC6334929C59EAF003ED9C0 /* SomewhatList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomewhatList.swift; sourceTree = "<group>"; };
 		0AC6334B29C59ED0003ED9C0 /* InsignificantList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsignificantList.swift; sourceTree = "<group>"; };
 		0AC6334D29C5AA56003ED9C0 /* NoteEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditor.swift; sourceTree = "<group>"; };
+		0AC6334F29C68AD5003ED9C0 /* NoteModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +113,9 @@
 				0AC6334329C56906003ED9C0 /* StickyStack.swift */,
 				0AC6331829C55409003ED9C0 /* StickyView.swift */,
 				0AC6334529C598EC003ED9C0 /* ContentView.swift */,
-				0AC6334729C59E7E003ED9C0 /* ImportantList.swift */,
+				0AC6334F29C68AD5003ED9C0 /* NoteModal.swift */,
 				0AC6334D29C5AA56003ED9C0 /* NoteEditor.swift */,
+				0AC6334729C59E7E003ED9C0 /* ImportantList.swift */,
 				0AC6334929C59EAF003ED9C0 /* SomewhatList.swift */,
 				0AC6334B29C59ED0003ED9C0 /* InsignificantList.swift */,
 				0AC6331A29C5540A003ED9C0 /* Assets.xcassets */,
@@ -280,6 +283,7 @@
 				0AC6334E29C5AA56003ED9C0 /* NoteEditor.swift in Sources */,
 				0AC6331929C55409003ED9C0 /* StickyView.swift in Sources */,
 				0AC6334A29C59EAF003ED9C0 /* SomewhatList.swift in Sources */,
+				0AC6335029C68AD5003ED9C0 /* NoteModal.swift in Sources */,
 				0AC6331729C55409003ED9C0 /* PaperclipApp.swift in Sources */,
 				0AC6334829C59E7E003ED9C0 /* ImportantList.swift in Sources */,
 				0AC6334629C598EC003ED9C0 /* ContentView.swift in Sources */,

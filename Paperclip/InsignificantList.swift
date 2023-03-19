@@ -21,9 +21,12 @@ struct InsignificantList: View {
                 Spacer()
             }
             ForEach(notes.insignificant()) { note in
-                if note.noteContains(search) {
+                if note.noteContains(search) && (note.importance == .insignficant) {
                     NavigationLink(destination: {
-                        
+                        NoteEditor(note: note)
+                            .onDisappear(perform: {
+                                notes = loadNotes()
+                            })
                     }, label: {
                         HStack {
                             Image(systemName: note.icon)

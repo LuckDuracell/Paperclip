@@ -14,28 +14,23 @@ struct NoteEditor: View {
     @FocusState var showTitleKeyboard: Bool
     
     var body: some View {
-        ZStack(alignment: .top) {
-            TextField("", text: $note.title)
-                .foregroundColor(.blue)
+        VStack {
+            TextField("Title", text: $note.title)
+                .foregroundColor(.primary)
+                .font(.largeTitle.bold())
+                .padding(.horizontal)
                 .focused($showTitleKeyboard)
-            NavigationStack {
-                ScrollView {
-                    TextEditor(text: $note.words)
-                        .padding()
-                        .frame(width: screen().width, height: screen().height)
-                        .scrollContentBackground(.hidden)
-                        .background(.blue.opacity(0.5))
-                } .navigationTitle(note.title)
+            ScrollView {
+                TextEditor(text: $note.words)
+                    .padding()
+                    .frame(minWidth: screen().width, minHeight: screen().height * 0.6 , maxHeight: .infinity)
+                    .scrollContentBackground(.visible)
+                    .scrollDisabled(true)
             }
-            Button {
-                showTitleKeyboard = true
-            } label: {
-                Rectangle()
-                    .frame(height: 60)
-                    .foregroundColor(.green.opacity(showTitleKeyboard ? 0.9 : 0.325))
-                    .padding(.top, 30)
-            }
-        }
+        } .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: note, perform: { _ in
+                saveNotes(updatedNote(note))
+            })
     }
 }
 
@@ -44,3 +39,4 @@ struct NoteEditor_Previews: PreviewProvider {
         NoteEditor(note: Note(importance: .somewhat, title: "Title", words: "hello there!"))
     }
 }
+

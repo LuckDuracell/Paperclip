@@ -21,10 +21,13 @@ struct ImportantList: View {
                 Spacer()
             }
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                ForEach(notes.important()) { note in
-                    if note.noteContains(search) {
+                ForEach($notes) { $note in
+                    if note.noteContains(search) && note.importance == .important {
                         NavigationLink(destination: {
                             NoteEditor(note: note)
+                                .onDisappear(perform: {
+                                    notes = loadNotes()
+                                })
                         }, label: {
                             VStack {
                                 HStack {
@@ -39,6 +42,7 @@ struct ImportantList: View {
                             .frame(width: screen().width * 0.45, height: screen().width * 0.2)
                             .background(.regularMaterial)
                             .cornerRadius(15)
+                            
                         }) .foregroundColor(.primary)
                     }
                 }
