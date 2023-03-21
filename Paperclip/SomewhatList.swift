@@ -30,6 +30,7 @@ struct SomewhatList: View {
                     }, label: {
                         HStack {
                             Image(systemName: note.icon)
+                                .foregroundColor(.accentColor)
                             Text(note.title)
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -42,6 +43,7 @@ struct SomewhatList: View {
                         .cornerRadius(15)
                         .padding(.horizontal)
                     }) .foregroundColor(.primary)
+                        .shadow(color: .black.opacity(0.085), radius: 4, x: 1, y: 3)
                 }
             }
             Divider()

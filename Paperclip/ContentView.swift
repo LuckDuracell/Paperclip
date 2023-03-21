@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var notes: [Note] = loadNotes()
+    @State var notes: [Note] = [Note(importance: .important, title: "Cool Note", words: "Hello!")]
     
     @State var searchText = ""
     

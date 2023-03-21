@@ -31,12 +31,19 @@ struct ImportantList: View {
                         }, label: {
                             VStack {
                                 HStack {
-                                    Image(systemName: note.icon)
+                                    ZStack {
+                                        Circle()
+                                            .foregroundColor(.accentColor)
+                                        Image(systemName: note.icon)
+                                            .foregroundColor(.white)
+                                            .padding(5)
+                                    }
                                     Text(note.lastEditDate, style: .date)
                                     Spacer()
                                 } .padding(.bottom, 1)
                                     .font(.footnote)
                                 Text(note.title)
+                                    .font(.system(.subheadline, weight: .medium))
                             }
                             .padding()
                             .frame(width: screen().width * 0.45, height: screen().width * 0.2)
@@ -44,6 +51,7 @@ struct ImportantList: View {
                             .cornerRadius(15)
                             
                         }) .foregroundColor(.primary)
+                            .shadow(color: .black.opacity(0.085), radius: 4, x: 1, y: 3)
                     }
                 }
             } .padding(.horizontal)

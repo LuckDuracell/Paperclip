@@ -18,6 +18,7 @@ struct Note: Codable, Hashable, Identifiable {
     var firstCreatedDate: Date = Date()
     var passwordProtected: Bool = false
     var password: String = ""
+    var contentType: ContentType = .words
     var id = UUID()
 }
 
@@ -27,6 +28,19 @@ enum Importance: Codable {
     case important
 }
 
+enum ContentType: Codable {
+    case words
+    case bullets
+    case checklist
+    case drawing
+    case image
+    case video
+    case bold
+    case title
+    case caption
+}
+
+// When combined with the updateNote function, this allows for live updating of UserDefaults without reloading the current Note in view
 func saveNotes(_ notes: [Note]) {
     let encoder = JSONEncoder()
     if let encoded = try? encoder.encode(notes) {
